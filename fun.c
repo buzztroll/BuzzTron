@@ -8,7 +8,7 @@ static char *                           g_exit_msg = NULL;
 static char **                          g_map;
 static int                              g_map_length;
 
-static char                             g_msg_buffer[16];
+static chat_byte_t                      g_msg_buffer[16];
 WINDOW *                                g_main_scr;
 static int                              g_max_x;
 static int                              g_max_y;
@@ -437,7 +437,7 @@ client_header_read_cb(
     char                                type;
     int                                 max_x;
     int                                 max_y;
-    char *                              buffer;
+    chat_byte_t *                       buffer;
 
     if(event->timedout || event->error != 0)
     {
@@ -479,7 +479,7 @@ client_header_read_cb(
                 sleep(5);
                 exit(2);
             }
-            buffer = (char *)malloc(max_y*max_x);
+            buffer = (chat_byte_t *)malloc(max_y*max_x);
             g_max_x = max_x;
             g_max_y = max_y;
             chat_io_read(
@@ -499,7 +499,7 @@ void
 connect_cb(
     chat_io_event_t *                   event)
 {
-    char *                              buffer;
+    chat_byte_t *                       buffer;
 
     if(event->timedout || event->error != 0)
     {
@@ -607,7 +607,7 @@ void
 game_tic(
     chat_io_event_t *                   event)
 {
-    char *                              buf = NULL;
+    chat_byte_t *                       buf = NULL;
     int                                 rc;
 
     draw_map();
@@ -727,7 +727,7 @@ client_poll_keyboard(
     }
     if(send_ch != '\0')
     {
-        char * buffer = malloc(3);
+        chat_byte_t * buffer = malloc(3);
 
         buffer[1] = send_ch;
         chat_io_write(
@@ -750,7 +750,7 @@ send_map()
     int                                 i;
     int                                 x;
     int                                 y;
-    char *                              buffer;
+    chat_byte_t *                       buffer;
 
     i = 0;
     buffer = malloc(g_map_length + 3);
